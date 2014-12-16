@@ -43,4 +43,5 @@ Value2
 Contributors
 ========
 
- - [Oliver Lipkau](http://oliver.lipkau.net/blog/)
+ - Author: [Oliver Lipkau](http://oliver.lipkau.net/blog/)
+ - Contributor: [Craig Buchanan](https://github.com/craibuc)
