@@ -39,3 +39,8 @@ PS>$FileContent = Get-IniContent "C:\settings.ini"
 PS>$FileContent["Category2"]["Key2"]
 Value2
 ```
+
+Contributors
+========
+
+ - [Oliver Lipkau](http://oliver.lipkau.net/blog/)
