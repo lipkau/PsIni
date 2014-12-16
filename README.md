@@ -12,14 +12,17 @@ Examples
 
 Create a Hashtable and save it to C:\settings.ini:
 
-    PS> Import-Module PsIni
-    PS> $Category1 = @{“Key1”=”Value1”;”Key2”=”Value2”}
-    PS> $Category2 = @{“Key1”=”Value1”;”Key2”=”Value2”}
-    PS> $NewINIContent = @{“Category1”=$Category1;”Category2”=$Category2}
-    PS> Out-IniFile -InputObject $NewINIContent -FilePath "C:\MyNewFile.INI"
+``` powershell
+PS> Import-Module PsIni
+PS> $Category1 = @{“Key1”=”Value1”;”Key2”=”Value2”}
+PS> $Category2 = @{“Key1”=”Value1”;”Key2”=”Value2”}
+PS> $NewINIContent = @{“Category1”=$Category1;”Category2”=$Category2}
+PS> Out-IniFile -InputObject $NewINIContent -FilePath "C:\settings.ini"
+```
 
 Results:
 
+``` powershell
 [Category1]
 Key1=Value1
 Key2=Value2
@@ -27,11 +30,12 @@ Key2=Value2
 [Category2]
 Key1=Value1
 Key2=Value2
-
+```
+ 
 Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:
 
-    PS>$FileContent = Get-IniContent "c:\settings.ini"
-    PS>$FileContent["Category2"]["Key2"]
-    Value2
-
-        
+``` powershell
+PS>$FileContent = Get-IniContent "C:\settings.ini"
+PS>$FileContent["Category2"]["Key2"]
+Value2
+```
