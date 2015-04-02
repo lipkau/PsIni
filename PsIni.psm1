@@ -24,7 +24,13 @@ Function Get-IniContent {
         System.Collections.Hashtable 
          
     .Parameter FilePath 
-        Specifies the path to the input file. 
+        Specifies the path to the input file.
+
+    .Parameter HashComments
+        Treat lines starting with # as a comment.
+
+    .Parameter StripComments
+        Remove lines determined to be comments from the resulting dictionary.
          
     .Example 
         $FileContent = Get-IniContent "C:\myinifile.ini" 
@@ -52,9 +58,12 @@ Function Get-IniContent {
     [CmdletBinding()] 
     Param( 
         [ValidateNotNullOrEmpty()] 
-        [ValidateScript({(Test-Path $_) -and ((Get-Item $_).Extension -eq ".ini")})] 
+        [ValidateScript({(Test-Path $_)})] 
         [Parameter(ValueFromPipeline=$True,Mandatory=$True)] 
-        [string]$FilePath 
+        [string]$FilePath,
+
+        [switch]$HashComments,
+        [switch]$StripComments
     ) 
      
     Begin 
@@ -64,33 +73,43 @@ Function Get-IniContent {
     { 
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Processing file: $Filepath" 
              
-        $ini = @{} 
+        $ini = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
+        $commentRegex = '^(;.*)$'
+        if ($HashComments)
+        {
+            $commentRegex = '^([;#].*)$'
+        }
         switch -regex -file $FilePath 
         { 
             "^\[(.+)\]$" # Section 
             { 
                 $section = $matches[1] 
-                $ini[$section] = @{} 
+                $ini[$section] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
                 $CommentCount = 0 
             } 
-            "^(;.*)$" # Comment 
-            { 
-                if (!($section)) 
-                { 
-                    $section = "No-Section" 
-                    $ini[$section] = @{} 
-                } 
-                $value = $matches[1] 
-                $CommentCount = $CommentCount + 1 
-                $name = "Comment" + $CommentCount 
-                $ini[$section][$name] = $value 
+            $commentRegex # Comment 
+            {
+                if (!$StripComments)
+                {
+                    if (!($section)) 
+                    {
+                        $section = "_"
+                        $ini[$section] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
+                    } 
+                    $value = $matches[1] 
+                    $CommentCount = $CommentCount + 1 
+                    $name = "Comment" + $CommentCount 
+                    $ini[$section][$name] = $value
+                }
+                # Make sure we don't match comments with equal signs below.
+                continue
             }  
             "(.+?)\s*=\s*(.*)" # Key 
             { 
                 if (!($section)) 
                 { 
-                    $section = "No-Section" 
-                    $ini[$section] = @{} 
+                    $section = "_" 
+                    $ini[$section] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
                 } 
                 $name,$value = $matches[1..2] 
                 $ini[$section][$name] = $value 
@@ -104,9 +123,22 @@ Function Get-IniContent {
         {Write-Verbose "$($MyInvocation.MyCommand.Name):: Function ended"} 
 }
 
+function writeKeys($dict, $Encoding, $outFile, $equal, $name)
+{
+    Foreach ($j in $dict.keys) 
+    { 
+        if ($j -match "^Comment[\d]+") {
+            Write-Verbose "$name:: Writing comment: $j"
+            Add-Content -Path $outFile -Value "$($dict[$j])" -Encoding $Encoding 
+        } else {
+            Write-Verbose "$name:: Writing key: $j" 
+            Add-Content -Path $outFile -Value "$j$equal$($dict[$j])" -Encoding $Encoding 
+        } 
+         
+    } 
+}
 
-
-Function Out-IniFile { 
+Function Out-IniFile {
     <# 
     .Synopsis 
         Write hash content to INI file 
@@ -127,7 +159,7 @@ Function Out-IniFile {
          
     .Inputs 
         System.String 
-        System.Collections.Hashtable 
+        System.Collections.IDictionary 
          
     .Outputs 
         System.IO.FileSystemInfo 
@@ -155,6 +187,9 @@ Function Out-IniFile {
          
      .Parameter PassThru 
         Passes an object representing the location to the pipeline. By default, this cmdlet does not generate any output. 
+
+     .Parameter Loose
+        Adds spaces around the equal sign when writing the key = value
                  
     .Example 
         Out-IniFile $IniVar "C:\myinifile.ini" 
@@ -192,11 +227,10 @@ Function Out-IniFile {
          
         [ValidateSet("Unicode","UTF7","UTF8","UTF32","ASCII","BigEndianUnicode","Default","OEM")] 
         [Parameter()] 
-        [string]$Encoding = "Unicode", 
+        [string]$Encoding = "UTF8", 
 
          
         [ValidateNotNullOrEmpty()] 
-        [ValidatePattern('^([a-zA-Z]\:)?.+\.ini$')] 
         [Parameter(Mandatory=$True)] 
         [string]$FilePath, 
          
@@ -204,9 +238,11 @@ Function Out-IniFile {
          
         [ValidateNotNullOrEmpty()] 
         [Parameter(ValueFromPipeline=$True,Mandatory=$True)] 
-        [Hashtable]$InputObject, 
+        [System.Collections.IDictionary]$InputObject, 
          
-        [switch]$Passthru 
+        [switch]$Passthru,
+
+        [switch]$Loose
     ) 
      
     Begin 
@@ -215,32 +251,30 @@ Function Out-IniFile {
     Process 
     { 
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Writing to file: $Filepath" 
-         
+        $equal = '='
+        if ($Loose)
+        {
+            $equal = ' = '
+        }
         if ($append) {$outfile = Get-Item $FilePath} 
         else {$outFile = New-Item -ItemType file -Path $Filepath -Force:$Force} 
 		if (!($outFile)) {Throw "Could not create File"} 
         foreach ($i in $InputObject.keys) 
         { 
-            if (!($($InputObject[$i].GetType().Name) -eq "Hashtable")) 
+            if (!($InputObject[$i].GetType().GetInterface('IDictionary'))) 
             { 
                 #No Sections 
                 Write-Verbose "$($MyInvocation.MyCommand.Name):: Writing key: $i" 
-                Add-Content -Path $outFile -Value "$i=$($InputObject[$i])" -Encoding $Encoding 
+                Add-Content -Path $outFile -Value "$i$equal$($InputObject[$i])" -Encoding $Encoding 
+
+            } elseif ($i -eq '_') {
+                writeKeys $InputObject[$i] $Encoding $outFile $equal $MyInvocation.MyCommand.Name
             } else { 
                 #Sections 
                 Write-Verbose "$($MyInvocation.MyCommand.Name):: Writing Section: [$i]" 
                 Add-Content -Path $outFile -Value "[$i]" -Encoding $Encoding 
-                Foreach ($j in $($InputObject[$i].keys | Sort-Object)) 
-                { 
-                    if ($j -match "^Comment[\d]+") { 
-                        Write-Verbose "$($MyInvocation.MyCommand.Name):: Writing comment: $j" 
-                        Add-Content -Path $outFile -Value "$($InputObject[$i][$j])" -Encoding $Encoding 
-                    } else { 
-                        Write-Verbose "$($MyInvocation.MyCommand.Name):: Writing key: $j" 
-                        Add-Content -Path $outFile -Value "$j=$($InputObject[$i][$j])" -Encoding $Encoding 
-                    } 
-                     
-                } 
+                writeKeys $InputObject[$i] $Encoding $outFile $equal $MyInvocation.MyCommand.Name
+
                 Add-Content -Path $outFile -Value "" -Encoding $Encoding 
             } 
         } 
