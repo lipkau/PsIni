@@ -122,7 +122,8 @@ Function Out-IniFile {
         Version		: 1.0 - 2010/03/12 - Initial release 
                 	  1.1 - 2012/04/19 - Bugfix/Added example to help (Thx Ingmar Verheij) 
                       1.2 - 2014/12/11 - Improved handling for missing output file (Thx SLDR)
-         
+                      2014/01/06 - CB - removed extra \r\n at end of file
+
         #Requires -Version 2.0 
          
     .Inputs 
@@ -176,9 +177,9 @@ Function Out-IniFile {
  
     .Example 
         $Category1 = @{“Key1”=”Value1”;”Key2”=”Value2”} 
-    $Category2 = @{“Key1”=”Value1”;”Key2”=”Value2”} 
-    $NewINIContent = @{“Category1”=$Category1;”Category2”=$Category2} 
-    Out-IniFile -InputObject $NewINIContent -FilePath "C:\MyNewFile.INI" 
+        $Category2 = @{“Key1”=”Value1”;”Key2”=”Value2”} 
+        $NewINIContent = @{“Category1”=$Category1;”Category2”=$Category2} 
+        Out-IniFile -InputObject $NewINIContent -FilePath "C:\MyNewFile.INI" 
         ----------- 
         Description 
         Creating a custom Hashtable and saving it to C:\MyNewFile.INI 
@@ -241,7 +242,8 @@ Function Out-IniFile {
                     } 
                      
                 } 
-                Add-Content -Path $outFile -Value "" -Encoding $Encoding 
+                # removing extra `r`n
+                # Add-Content -Path $outFile -Value "" -Encoding $Encoding 
             } 
         } 
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Finished Writing to file: $path" 
