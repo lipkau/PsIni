@@ -2,7 +2,7 @@
 ## Description  
 Work with INI files in PowerShell using hashtables.  
 
-#### Origin
+##### Origin
 This code was originally a blog post for [Hey Scripting Guy](http://blogs.technet.com/b/heyscriptingguy)
 > [Use PowerShell to Work with Any INI File](http://blogs.technet.com/b/heyscriptingguy/archive/2011/08/20/use-powershell-to-work-with-any-ini-file.aspx) 
 
@@ -21,13 +21,13 @@ Create a Hashtable and save it to C:\settings.ini:
 
 Results:
 
-> [Category1]
-> Key1=Value1
-> Key2=Value2
-> 
-> [Category2]
-> Key1=Value1
-> Key2=Value2
+> [Category1]  
+> Key1=Value1  
+> Key2=Value2  
+>   
+> [Category2]  
+> Key1=Value1  
+> Key2=Value2  
  
 Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:
 
