@@ -13,11 +13,10 @@ The individual functions have been published to Miscrosoft's Script Gallery:
 ## Examples
 Create a Hashtable and save it to C:\settings.ini:
 
-      powershell
       PS> Import-Module PsIni
-      PS> $Category1 = @{“Key1”=”Value1”;”Key2”=”Value2”}
-      PS> $Category2 = @{“Key1”=”Value1”;”Key2”=”Value2”}
-      PS> $NewINIContent = @{“Category1”=$Category1;”Category2”=$Category2}
+      PS> $Category1 = @{"Key1"="Value1";"Key2"="Value2"}
+      PS> $Category2 = @{"Key1"="Value1";"Key2"="Value2"}
+      PS> $NewINIContent = @{"Category1"=$Category1;"Category2"=$Category2}
       PS> Out-IniFile -InputObject $NewINIContent -FilePath "C:\settings.ini"
 
 Results:
