@@ -23,6 +23,7 @@ Function Get-IniContent {
                                               Typo (Thx Dave Stiff)
                       1.0.2 - 2015/06/06 - OL - Improvment to switch (Thx Tallandtree)
                       1.0.3 - 2015/06/18 - OL - Migrate to semantic versioning (GitHub issue#4)
+                      1.0.4 - 2015/06/18 - OL - Remove check for .ini extension (GitHub Issue#6)
 
         #Requires -Version 2.0
 
@@ -61,7 +62,7 @@ Function Get-IniContent {
     [CmdletBinding()]
     Param(
         [ValidateNotNullOrEmpty()]
-        [ValidateScript({(Test-Path $_) -and ((Get-Item $_).Extension -eq ".ini")})]
+        [ValidateScript({(Test-Path $_)})]
         [Parameter(ValueFromPipeline=$True,Mandatory=$True)]
         [string]$FilePath
     )
@@ -135,6 +136,7 @@ Function Out-IniFile {
                       1.0.3 - 2014/01/06 - CB - removed extra \r\n at end of file
                       1.0.4 - 2015/06/06 - OL - Typo (Thx Dominik)
                       1.0.5 - 2015/06/18 - OL - Migrate to semantic versioning (GitHub issue#4)
+                      1.0.6 - 2015/06/18 - OL - Remove check for .ini extension (GitHub Issue#6)
 
         #Requires -Version 2.0
 
@@ -208,7 +210,7 @@ Function Out-IniFile {
         [string]$Encoding = "Unicode",
 
         [ValidateNotNullOrEmpty()]
-        [ValidatePattern('^([a-zA-Z0-9_-.]\:)?.+\.ini$')]
+        [ValidatePattern('^[a-zA-Z0-9öäüÜÖÄ!§$%&\(\)=;_\''+#\-\.,\`²³\{\[\]\}]{1,255}$')]
         [Parameter(Mandatory=$True)]
         [string]$FilePath,
 
