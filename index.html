@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Psini by lipkau</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Psini</h1>
+        <h2>Persist a PowerShell hashtable as an INI file.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/lipkau/PsIni/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/lipkau/PsIni/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/lipkau/PsIni" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="psini-" class="anchor" href="#psini-" aria-hidden="true"><span class="octicon octicon-link"></span></a>PsIni <a href="https://gitter.im/lipkau/PsIni?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/lipkau/PsIni"></a>
+</h1>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>Work with INI files in PowerShell using hashtables.  </p>
+
+<h5>
+<a id="origin" class="anchor" href="#origin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Origin</h5>
+
+<p>This code was originally a blog post for <a href="http://blogs.technet.com/b/heyscriptingguy">Hey Scripting Guy</a></p>
+
+<blockquote>
+<p><a href="http://blogs.technet.com/b/heyscriptingguy/archive/2011/08/20/use-powershell-to-work-with-any-ini-file.aspx">Use PowerShell to Work with Any INI File</a> </p>
+</blockquote>
+
+<p>The individual functions have been published to Miscrosoft's Script Gallery:</p>
+
+<ul>
+<li><a href="http://gallery.technet.microsoft.com/ea40c1ef-c856-434b-b8fb-ebd7a76e8d91">Get-IniContent</a></li>
+<li><a href="http://gallery.technet.microsoft.com/scriptcenter/7d7c867f-026e-4620-bf32-eca99b4e42f4">Out-IniFile</a></li>
+</ul>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<p>Create a Hashtable and save it to C:\settings.ini:</p>
+
+<pre><code>  PS&gt; Import-Module PsIni
+  PS&gt; $Category1 = @{"Key1"="Value1";"Key2"="Value2"}
+  PS&gt; $Category2 = @{"Key1"="Value1";"Key2"="Value2"}
+  PS&gt; $NewINIContent = @{"Category1"=$Category1;"Category2"=$Category2}
+  PS&gt; Out-IniFile -InputObject $NewINIContent -FilePath "C:\settings.ini"
+</code></pre>
+
+<p>Results:</p>
+
+<blockquote>
+<p>[Category1]<br>
+Key1=Value1<br>
+Key2=Value2  </p>
+
+<p>[Category2]<br>
+Key1=Value1<br>
+Key2=Value2  </p>
+</blockquote>
+
+<p>Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:</p>
+
+<pre><code>  PS&gt;$FileContent = Get-IniContent "C:\settings.ini"
+  PS&gt;$FileContent["Category2"]["Key2"]
+  Value2
+</code></pre>
+
+<h2>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<ul>
+<li>Author: <a href="https://github.com/lipkau">Oliver Lipkau</a> [<a href="http://oliver.lipkau.net/blog/">blog</a>]</li>
+<li>Contributor: <a href="https://github.com/craibuc">Craig Buchanan</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-64222060-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
