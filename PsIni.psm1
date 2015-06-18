@@ -1,3 +1,10 @@
+<#
+.Description
+    Convert hashtable to INI file and back.
+.Homepage
+    http://lipkau.github.io/PsIni/
+#>
+
 Function Get-IniContent {
     <#
     .Synopsis
@@ -11,10 +18,11 @@ Function Get-IniContent {
         Blog		: http://oliver.lipkau.net/blog/
 		Source		: https://github.com/lipkau/PsIni
                       http://gallery.technet.microsoft.com/scriptcenter/ea40c1ef-c856-434b-b8fb-ebd7a76e8d91
-        Version		: 1.0 - 2010/03/12 - OL - Initial release
-                      1.1 - 2014/12/11 - OL - Typo (Thx SLDR)
+        Version		: 1.0.0 - 2010/03/12 - OL - Initial release
+                      1.0.1 - 2014/12/11 - OL - Typo (Thx SLDR)
                                               Typo (Thx Dave Stiff)
-                      1.2 - 2015/06/06 - OL - Improvment to switch (Thx Tallandtree)
+                      1.0.2 - 2015/06/06 - OL - Improvment to switch (Thx Tallandtree)
+                      1.0.3 - 2015/06/18 - OL - Migrate to semantic versioning (GitHub issue#4)
 
         #Requires -Version 2.0
 
@@ -121,11 +129,12 @@ Function Out-IniFile {
         Blog		: http://oliver.lipkau.net/blog/
 		Source		: https://github.com/lipkau/PsIni
                       http://gallery.technet.microsoft.com/scriptcenter/ea40c1ef-c856-434b-b8fb-ebd7a76e8d91
-        Version		: 1.0 - 2010/03/12 - OL - Initial release
-                	  1.1 - 2012/04/19 - OL - Bugfix/Added example to help (Thx Ingmar Verheij)
-                      1.2 - 2014/12/11 - OL - Improved handling for missing output file (Thx SLDR)
-                      1.3 - 2014/01/06 - CB - removed extra \r\n at end of file
-                      1.4 - 2015/06/06 - OL - Typo (Thx Dominik)
+        Version		: 1.0.0 - 2010/03/12 - OL - Initial release
+                	  1.0.1 - 2012/04/19 - OL - Bugfix/Added example to help (Thx Ingmar Verheij)
+                      1.0.2 - 2014/12/11 - OL - Improved handling for missing output file (Thx SLDR)
+                      1.0.3 - 2014/01/06 - CB - removed extra \r\n at end of file
+                      1.0.4 - 2015/06/06 - OL - Typo (Thx Dominik)
+                      1.0.5 - 2015/06/18 - OL - Migrate to semantic versioning (GitHub issue#4)
 
         #Requires -Version 2.0
 
