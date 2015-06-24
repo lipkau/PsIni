@@ -245,7 +245,7 @@ Function Out-IniFile {
         [string]$Encoding = "UTF8", 
 
         [ValidateNotNullOrEmpty()]
-        [ValidatePattern('^[a-zA-Z0-9öäüÜÖÄ!§$%&\(\)=;_\''+#\-\.,\`²³\{\[\]\}]{1,255}$')]
+        [ValidatePattern('^[a-zA-Z0-9öäüÜÖÄ!§$%&\:\\\(\)=;_\''+#\-\.,\`²³\{\[\]\}]{1,255}$')]
         [Parameter(Mandatory=$True)]
         [string]$FilePath,
 
