@@ -15,7 +15,7 @@
 ModuleToProcess = 'PsIni.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.0'
+ModuleVersion = '1.1.1'
 
 # ID used to uniquely identify this module
 GUID = '98e1dc0f-2f03-4ca1-98bb-fd7b4b6ac652'
