@@ -18,6 +18,7 @@
                       1.0.4 - 2015/06/18 - OL - Remove check for .ini extension (GitHub Issue#6)
                       1.1.0 - 2015/07/14 - CB - Improve round-tripping and be a bit more liberal (GitHub Pull #7)
                                            OL - Small Improvments and cleanup
+                      1.1.1 - 2015/07/14 - CB - changed .outputs section to be OrderedDictionary
 
         #Requires -Version 2.0
 
@@ -25,7 +26,7 @@
         System.String
 
     .Outputs
-        System.Collections.Hashtable
+        System.Collections.Specialized.OrderedDictionary
 
     .Parameter FilePath
         Specifies the path to the input file.
