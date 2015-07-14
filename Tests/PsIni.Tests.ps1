@@ -43,8 +43,8 @@ Describe "PsIni" {
         $hashOut = Get-IniContent $ini
 
         # assert
-        It "creates a hashtable from an INI file" {
-            ($hashOut.GetType()) | Should Be hashtable
+        It "creates a OrderedDictionary from an INI file" {
+            ($hashOut.GetType()) | Should Be System.Collections.Specialized.OrderedDictionary
         }
 
         # assert
