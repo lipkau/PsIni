@@ -36,8 +36,10 @@ Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:
       Value2
 
 ## Contributors
+
 ### Author
  - [Oliver Lipkau](https://github.com/lipkau)
-### Contributor
+
+ ### Contributor
  - [Craig Buchanan](https://github.com/craibuc)
  - [Colin Bate](https://github.com/colinbate)
