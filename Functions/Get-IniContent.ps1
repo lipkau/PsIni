@@ -31,9 +31,11 @@
         Specifies the path to the input file.
 
     .Parameter CommentChar
-        Treat lines starting with # as a comment.
+        Specify what characters should be describe a comment.
+        Lines starting with the characters provided will be rendered as comments.
+        Default: ";"
 
-    .Parameter StripComments
+    .Parameter IgnoreComments
         Remove lines determined to be comments from the resulting dictionary.
          
     .Example
