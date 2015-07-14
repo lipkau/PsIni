@@ -1,6 +1,6 @@
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-Import-Module PsIni -Force
+Import-Module "$here\PsIni.psm1" -Force
 
 Describe "I/O" {
 
@@ -39,9 +39,9 @@ Describe "I/O" {
         $hashOut = Get-IniContent $ini
         # Write-Host "hashOut: $($hashOut.GetType().FullName)"
 
-        It "creates a hashtable from an INI file" {
+        It "creates an OrderedDictionary from an INI file" {
             # ($hashOut.GetType()) | Should Be $hashIn.GetType()
-            ($hashOut.GetType()) | Should Be hashtable
+            ($hashOut.GetType()) | Should Be System.Collections.Specialized.OrderedDictionary
         }
 
         It "content matches original hashtable" {
@@ -49,6 +49,38 @@ Describe "I/O" {
         }
 
     }
+	
+	Context "INI File Round-trip" {
+		$fileContent = "[first]`r`na = 1`r`nb = 2`r`n`r`n[second]`r`n; A classic comment`r`n# Hash comment`r`nc = 3`r`n`r`n"
+		$fileContentTight = "[first]`r`na=1`r`nb=2`r`n`r`n[second]`r`n; A classic comment`r`n# Hash comment`r`nc=3`r`n`r`n"
+		$fileContentTightNoHashComment = "[first]`r`na=1`r`nb=2`r`n`r`n[second]`r`n; A classic comment`r`nc=3`r`n`r`n"
+		$fileContentNoComment = "[first]`r`na = 1`r`nb = 2`r`n`r`n[second]`r`nc = 3`r`n`r`n"
+		
+		It "makes round trip with default whitespace and comments" {
+			$filename = Join-Path $TestDrive "\rt-default.ini"
+			Out-File $filename -InputObject $fileContentTight
+			$input = Get-IniContent $filename
+			Out-IniFile -FilePath $filename -InputObject $input -Force
+			Get-Content $filename | Out-String | Should Be $fileContentTightNoHashComment
+		}
+		
+		It "makes round trip with loose whitespace and stripped comments" {
+			$filename = Join-Path $TestDrive "\rt-loose-strip.ini"
+			Out-File $filename -InputObject $fileContent
+			$input = Get-IniContent $filename -StripComments
+			Out-IniFile -FilePath $filename -InputObject $input -Force -Loose
+			Get-Content $filename | Out-String | Should Be $fileContentNoComment
+		}
+		
+		It "makes round trip with loose whitespace and hash comments" {
+			$filename = Join-Path $TestDrive "\rt-loose-hash.ini"
+			Out-File $filename -InputObject $fileContent
+			$input = Get-IniContent $filename -HashComments
+			Out-IniFile -FilePath $filename -InputObject $input -Force -Loose
+			Get-Content $filename | Out-String | Should Be $fileContent
+		}
+		
+	}
 
 }
 
