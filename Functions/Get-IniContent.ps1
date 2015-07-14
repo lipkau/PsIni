@@ -30,7 +30,7 @@
     .Parameter FilePath
         Specifies the path to the input file.
 
-    .Parameter HashComments
+    .Parameter CommentChar
         Treat lines starting with # as a comment.
 
     .Parameter StripComments
@@ -66,7 +66,7 @@
         [Parameter(ValueFromPipeline=$True,Mandatory=$True)]
         [string]$FilePath,
         [char[]]$CommentChar = @(";"),
-        [switch]$StripComments
+        [switch]$IgnoreComments
     )
 
     Begin
@@ -91,7 +91,7 @@
             }
             $commentRegex # Comment 
             {
-                if (!$StripComments)
+                if (!$IgnoreComments)
                 {
                     if (!($section))
                     {
