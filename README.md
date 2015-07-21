@@ -47,8 +47,8 @@ Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:
  - [Oliver Lipkau](https://github.com/lipkau)
 
 ### Contributor
- - [Craig Buchanan](https://github.com/craibuc)
- - [Colin Bate](https://github.com/colinbate)
+ - [Craig Buchanan](https://github.com/craibuc)  
+ - [Colin Bate](https://github.com/colinbate)  
 
- ## Documentation
+## Documentation
  [Wiki Documentation](https://github.com/lipkau/PsIni/wiki/)
