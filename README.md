@@ -1,5 +1,5 @@
 ﻿# [PsIni](http://lipkau.github.io/PsIni/) [![Join the chat at https://gitter.im/lipkau/PsIni](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lipkau/PsIni?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-## Description  
+## Description
 Work with INI files in PowerShell using hashtables.  
 
 ##### Origin
@@ -9,6 +9,13 @@ This code was originally a blog post for [Hey Scripting Guy](http://blogs.techne
 The individual functions have been published to Miscrosoft's Script Gallery:
 * [Get-IniContent](http://gallery.technet.microsoft.com/ea40c1ef-c856-434b-b8fb-ebd7a76e8d91)
 * [Out-IniFile](http://gallery.technet.microsoft.com/scriptcenter/7d7c867f-026e-4620-bf32-eca99b4e42f4)
+
+## Table of Contents  
+* [Description](#description)
+* [Examples](#examples)
+* [Authors/Contributors](#authorscontributors)
+* [Documentation](#documentation)
+
 
 ## Examples
 Create a Hashtable and save it to C:\settings.ini:
@@ -35,11 +42,13 @@ Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:
       PS>$FileContent["Category2"]["Key2"]
       Value2
 
-## Contributors
-
+## Authors/Contributors
 ### Author
  - [Oliver Lipkau](https://github.com/lipkau)
 
 ### Contributor
  - [Craig Buchanan](https://github.com/craibuc)
  - [Colin Bate](https://github.com/colinbate)
+
+ ## Documentation
+ [Wiki Documentation](https://github.com/lipkau/PsIni/wiki/)
