@@ -10,7 +10,7 @@ body {
 
 /* General & 'Reset' Stuff */
 
-.container {
+/*.container {
   width: 90%;
   max-width: 600px;
   margin: 0 auto;
@@ -19,13 +19,13 @@ body {
 section {
   display: block;
   margin: 0 0 20px 0;
-}
+}*/
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 20px;
 }
 
-li {
+#main_content li {
   line-height: 1.4 ;
 }
 
@@ -78,14 +78,14 @@ header h2 {
 */
 
 #main_content {
-  width: 100%;
+  /*width: 100%;*/
   -webkit-font-smoothing: antialiased;
 }
 section img {
   max-width: 100%
 }
 
-h1, h2, h3, h4, h5, h6 {
+#main_content h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   color: #b5e853;
@@ -124,16 +124,16 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 0 5px 0;
 }
 
-dt {
+#main_content dt {
   font-style: italic;
   font-weight: bold;
 }
 
-ul li {
+#main_content ul li {
   list-style: none;
 }
 
-ul li:before {
+#main_content ul li:before {
   content: ">>";
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   font-size: 13px;
