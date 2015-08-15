@@ -1,4 +1,5 @@
-﻿Function Get-IniContent {
+﻿Set-StrictMode -Version Latest
+Function Get-IniContent {
     <#
     .Synopsis
         Gets the content of an INI file
@@ -83,6 +84,7 @@
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Processing file: $Filepath"
 
         $ini = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
+        $commentCount = 0
         switch -regex -file $FilePath
         {
             "^\[(.+)\]$" # Section
@@ -96,7 +98,7 @@
             {
                 if (!$IgnoreComments)
                 {
-                    if (!($section))
+                    if (!(test-path "variable:section"))
                     {
                         $section = "_"
                         $ini[$section] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
@@ -110,7 +112,7 @@
             }  
             "(.+?)\s*=\s*(.*)" # Key
             {
-                if (!($section))
+                if (!(test-path "variable:section"))
                 {
                     $section = "_" 
                     $ini[$section] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
