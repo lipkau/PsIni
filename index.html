@@ -52,47 +52,60 @@
 
         <!-- Title -->
         <h1 id="psini">
-          <a class="anchor" href="#psini-" aria-hidden="true"><span class="octicon octicon-link"></span></a>PsIni <a href="https://gitter.im/lipkau/PsIni?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat"></a>
+          <a class="anchor" href="#psini-" aria-hidden="true"><span class="octicon octicon-link"></span></a>PsIni
         </h1>
 
         <p>
-          <a href="https://waffle.io/lipkau/PsIni"><img src="https://badge.waffle.io/lipkau/PsIni.png?label=backlog&title=Backlog" alt="Stories in Backlog"></a>
-          <a href="https://waffle.io/lipkau/PsIni"><img src="https://badge.waffle.io/lipkau/PsIni.png?label=ready&title=Ready" alt="Stories in Ready"></a>
-          <a href="https://waffle.io/lipkau/PsIni"><img src="https://badge.waffle.io/lipkau/PsIni.png?label=In%20Progress&title=In%20Progress" alt="Stories In Progress"></a>
+          <a href="https://github.com/lipkau/PsIni/releases/latest"><img src="https://img.shields.io/github/release/lipkau/PsIni.svg?style=for-the-badge"></a>
+          <a href="https://ci.appveyor.com/project/lipkau/psini/branch/master"><img src="https://img.shields.io/appveyor/ci/lipkau/PsIni/master.svg?style=for-the-badge"></a>
+          <a href="https://www.powershellgallery.com/packages/PsIni"><img src="https://img.shields.io/powershellgallery/dt/PsIni.svg?style=for-the-badge"></a>
+          <img src="https://img.shields.io/github/license/lipkau/PsIni.svg?style=for-the-badge">
         </p>
 
         <!-- Description -->
         <h2 id="description">
           <a class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description
         </h2>
-        <p>Work with INI files in PowerShell using hashtables.  </p>
+        <p>Work with INI files in PowerShell using hashtables.</p>
 
-        <h4 id="origin">
+        <h3 id="origin">
           <a class="anchor" href="#origin" aria-hidden="true"><span class="octicon octicon-link"></span></a>Origin
-        </h4>
+        </h3>
         <p>This code was originally a blog post for <a href="http://blogs.technet.com/b/heyscriptingguy">Hey Scripting Guy</a></p>
         <blockquote>
           <p><a href="http://blogs.technet.com/b/heyscriptingguy/archive/2011/08/20/use-powershell-to-work-with-any-ini-file.aspx">Use PowerShell to Work with Any INI File</a> </p>
         </blockquote>
 
-        <p>The individual functions have been published to Miscrosoft's Script Gallery:</p>
+        <p>The individual functions have been published to microsoft's Script Gallery:</p>
         <ul>
           <li><a href="http://gallery.technet.microsoft.com/ea40c1ef-c856-434b-b8fb-ebd7a76e8d91">Get-IniContent</a></li>
           <li><a href="http://gallery.technet.microsoft.com/scriptcenter/7d7c867f-026e-4620-bf32-eca99b4e42f4">Out-IniFile</a></li>
         </ul>
 
+        <!-- Installation -->
+        <h2 id="installation">
+            <a class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation
+          </h2>
+        <p>PsIni is published to the <a href="https://www.powershellgallery.com/packages/PsIni">Powershell Gallery</a> and can be installed as follows:</p>
+
+        <pre>
+          <code>
+            Install-Module Psini
+          </code>
+        </pre>
+
         <!-- Examples -->
         <h2 id="examples">
           <a class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples
         </h2>
-        <p>Create a Hashtable and save it to C:\settings.ini:</p>
+        <p>Create a hashtable and save it to C:\settings.ini:</p>
         <pre>
           <code>
-            PS&gt; Import-Module PsIni
-            PS&gt; $Category1 = @{"Key1"="Value1";"Key2"="Value2"}
-            PS&gt; $Category2 = @{"Key1"="Value1";"Key2"="Value2"}
-            PS&gt; $NewINIContent = @{"Category1"=$Category1;"Category2"=$Category2}
-            PS&gt; Out-IniFile -InputObject $NewINIContent -FilePath "C:\settings.ini"
+            Import-Module PsIni
+            $Category1 = @{"Key1"="Value1";"Key2"="Value2"}
+            $Category2 = @{"Key1"="Value1";"Key2"="Value2"}
+            $NewINIContent = @{"Category1"=$Category1;"Category2"=$Category2}
+            Out-IniFile -InputObject $NewINIContent -FilePath "C:\settings.ini"
           </code>
         </pre>
         <p>Results:</p>
@@ -110,9 +123,8 @@
         <p>Returns the key "Key2" of the section "Category2" from the C:\settings.ini file:</p>
         <pre>
           <code>
-            PS&gt;$FileContent = Get-IniContent "C:\settings.ini"
-            PS&gt;$FileContent["Category2"]["Key2"]
-            Value2
+            $FileContent = Get-IniContent "C:\settings.ini"
+            $FileContent["Category2"]["Key2"]
           </code>
         </pre>
 
@@ -134,6 +146,11 @@
         <ul>
           <li><a href="https://github.com/craibuc">Craig Buchanan</a></li>
           <li><a href="https://github.com/colinbate">Colin Bate</a></li>
+          <li><a href="https://github.com/seanjseymour">Sean Seymour</a></li>
+          <li><a href="https://github.com/popojargo">Alexis Côté</a></li>
+          <li><a href="https://github.com/heilkn">Konstantin Heil</a></li>
+          <li><a href="https://github.com/SeverinLeonhardt">SeverinLeonhardt</a></li>
+          <li><a href="https://github.com/davidhayesbc">davidhayesbc</a></li>
         </ul>
 
         <!-- Documentation -->
@@ -142,6 +159,8 @@
         </h2>
         <p><a href="https://github.com/lipkau/PsIni/wiki/">Wiki Documentation</a></p>
       </div>
+
+      <!-- TOC-->
       <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="complementary">
         <nav class="bs-docs-sidebar hidden-print affix" id="TableOfContent">
           <ul class="nav bs-docs-sidenav">
@@ -151,6 +170,7 @@
                 <li><a href="#origin">Origin</a></li>
               </ul>
             </li>
+            <li><a href="installation">Installation</a></li>
             <li><a href="#examples">Examples</a></li>
             <li><a href="#authorscontributors">Authors/Contributors</a>
               <ul class="nav">
