@@ -96,7 +96,7 @@ Function Set-IniContent {
         
         # Encoding used to read file content
         [Parameter( Mandatory = $false, ParameterSetName = "File")]
-        [ValidateSet('ASCII', 'BigEndianUnicode', 'OEM', 'Unicode', 'UTF7', 'UTF8', 'UTF8BOM', 'UTF8NoBOM', 'UTF32')]
+        [ValidateSet('Default', 'ASCII', 'BigEndianUnicode', 'OEM', 'Unicode', 'UTF7', 'UTF8', 'UTF8BOM', 'UTF8NoBOM', 'UTF32')]
         [String] 
         $Encoding = 'UTF8NoBOM'
     )
