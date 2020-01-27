@@ -74,7 +74,12 @@
 
         # Remove lines determined to be comments from the resulting dictionary.
         [Switch]
-        $IgnoreComments
+        $IgnoreComments,
+        
+        # Encoding used to read file content
+        [ValidateSet('ASCII', 'BigEndianUnicode', 'OEM', 'Unicode', 'UTF7', 'UTF8', 'UTF8BOM', 'UTF8NoBOM', 'UTF32')]
+        [String] 
+        $Encoding = 'UTF8NoBOM'
     )
 
     Begin {
@@ -106,7 +111,9 @@
         }
 
         $commentCount = 0
-        switch -regex -file $FilePath {
+	$fileContent = Get-Content -Path $FilePath -Encoding $Encoding
+	foreach ($line in $fileContent) {
+	  switch -regex $line {
             $sectionRegex {
                 # Section
                 $section = $matches[1]
@@ -159,6 +166,7 @@
                 continue
             }
         }
+	}
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Finished Processing file: $FilePath"
         Write-Output $ini
     }
