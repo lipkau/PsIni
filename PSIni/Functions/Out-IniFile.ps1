@@ -70,7 +70,7 @@ Function Out-IniFile {
         # -- Unicode:  Encodes in UTF-16 format using the little-endian byte order.
         # -- UTF7:   Encodes in UTF-7 format.
         # -- UTF8:  Encodes in UTF-8 format.
-        [ValidateSet("Unicode", "UTF7", "UTF8", "ASCII", "BigEndianUnicode", "Byte", "String")]
+        [ValidateSet("Default", "Unicode", "UTF7", "UTF8", "ASCII", "BigEndianUnicode", "Byte", "String")]
         [Parameter()]
         [String]
         $Encoding = "UTF8",
@@ -123,7 +123,7 @@ Function Out-IniFile {
                 [System.Collections.IDictionary]
                 $InputObject,
 
-                [ValidateSet("Unicode", "UTF7", "UTF8", "ASCII", "BigEndianUnicode", "Byte", "String")]
+                [ValidateSet("Default", "Unicode", "UTF7", "UTF8", "ASCII", "BigEndianUnicode", "Byte", "String")]
                 [Parameter( Mandatory )]
                 [string]
                 $Encoding = "UTF8",
