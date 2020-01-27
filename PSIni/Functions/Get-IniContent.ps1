@@ -111,9 +111,13 @@
         }
 
         $commentCount = 0
+	Write-Verbose "$($MyInvocation.MyCommand.Name):: Read file ($FilePath) with Encoding($Encoding)"
 	$fileContent = Get-Content -Path $FilePath -Encoding $Encoding
+        $lineCount = 0
 	foreach ($line in $fileContent) {
-	  switch -regex $line {
+	  $lineCount++
+          Write-Verbose "$($MyInvocation.MyCommand.Name):: Line($lineCount) : $line"
+	  switch -regex ($line) {
             $sectionRegex {
                 # Section
                 $section = $matches[1]
