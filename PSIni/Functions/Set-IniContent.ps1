@@ -92,7 +92,13 @@ Function Set-IniContent {
         [Parameter( ParameterSetName = "Object" )]
         [ValidateNotNullOrEmpty()]
         [String[]]
-        $Sections
+        $Sections,
+        
+        # Encoding used to read file content
+        [Parameter( Mandatory = $false, ParameterSetName = "File")]
+        [ValidateSet('ASCII', 'BigEndianUnicode', 'OEM', 'Unicode', 'UTF7', 'UTF8', 'UTF8BOM', 'UTF8NoBOM', 'UTF32')]
+        [String] 
+        $Encoding = 'UTF8NoBOM'
     )
 
     Begin {
@@ -122,7 +128,7 @@ Function Set-IniContent {
     # Update the specified keys in the list, either in the specified section or in all sections.
     Process {
         # Get the ini from either a file or object passed in.
-        if ($PSCmdlet.ParameterSetName -eq 'File') { $content = Get-IniContent $FilePath }
+        if ($PSCmdlet.ParameterSetName -eq 'File') { $content = Get-IniContent $FilePath -Encoding $Encoding }
         if ($PSCmdlet.ParameterSetName -eq 'Object') { $content = $InputObject }
 
         # Specific section(s) were requested.
