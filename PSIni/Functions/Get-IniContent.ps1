@@ -74,7 +74,11 @@
 
         # Remove lines determined to be comments from the resulting dictionary.
         [Switch]
-        $IgnoreComments
+        $IgnoreComments,
+
+        # Remove sections without any key
+        [Switch]
+        $IgnoreEmptySection
     )
 
     Begin {
@@ -160,6 +164,14 @@
             }
         }
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Finished Processing file: $FilePath"
+        if($IgnoreEmptySection){
+            foreach($Section in $ini.Keys){
+                if(($ini[$Section]).Count -eq 0){
+                    Write-Verbose "$($MyInvocation.MyCommand.Name):: Removing empty section $Section"
+                    $ini.Remove($Section)
+                }
+            }
+        }
         Write-Output $ini
     }
 
