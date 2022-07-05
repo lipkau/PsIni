@@ -78,7 +78,7 @@
 
         # Remove sections without any key
         [Switch]
-        $IgnoreEmptySection
+        $IgnoreEmptySections
     )
 
     Begin {
@@ -164,12 +164,16 @@
             }
         }
         Write-Verbose "$($MyInvocation.MyCommand.Name):: Finished Processing file: $FilePath"
-        if($IgnoreEmptySection){
+        if($IgnoreEmptySections){
+            $ToRemove = [System.Collections.ArrayList]@()
             foreach($Section in $ini.Keys){
                 if(($ini[$Section]).Count -eq 0){
-                    Write-Verbose "$($MyInvocation.MyCommand.Name):: Removing empty section $Section"
-                    $ini.Remove($Section)
+                    $ToRemove.Add($Section)
                 }
+            }
+            foreach($Section in $ToRemove){
+                Write-Verbose "$($MyInvocation.MyCommand.Name):: Removing empty section $Section"
+                $ini.Remove($Section)
             }
         }
         Write-Output $ini
