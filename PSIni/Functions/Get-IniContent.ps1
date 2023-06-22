@@ -89,7 +89,7 @@
 
         $commentRegex = "^\s*([$($CommentChar -join '')].*)$"
         $sectionRegex = "^\s*\[(.+)\]\s*$"
-        $keyRegex     = "^\s*(.+?)\s*=\s*(['`"]?)(.*)\2\s*$"
+        $keyRegex     = "^\s*(.+?)\s*=\s*((['`"]*).*\3)\s*$"
 
         Write-Debug ("commentRegex is {0}." -f $commentRegex)
     }
@@ -141,7 +141,7 @@
                     $section = $script:NoSection
                     $ini[$section] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
                 }
-                $name, $value = $matches[1, 3]
+                $name, $value = $matches[1, 2]
                 Write-Verbose "$($MyInvocation.MyCommand.Name):: Adding key $name with value: $value"
                 if (-not $ini[$section][$name]) {
                     $ini[$section][$name] = $value
