@@ -169,12 +169,12 @@
             $ToRemove = [System.Collections.ArrayList]@()
             foreach($Section in $ini.Keys){
                 if(($ini[$Section]).Count -eq 0){
-                    $ToRemove.Add($Section)
+                    $null = $ToRemove.Add($Section)
                 }
             }
             foreach($Section in $ToRemove){
                 Write-Verbose "$($MyInvocation.MyCommand.Name):: Removing empty section $Section"
-                $ini.Remove($Section)
+                $null = $ini.Remove($Section)
             }
         }
         Write-Output $ini
