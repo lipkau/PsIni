@@ -42,6 +42,7 @@ Describe "PsIni functionality" {
     $dictIn["Category2"] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
     $dictIn["Category2"]["Key3"] = @("Value3.1", "Value3.2", "Value3.3")
     $dictIn["Category2"]["Key4"] = "Value4"
+    $dictIn["Category3"] = New-Object System.Collections.Specialized.OrderedDictionary([System.StringComparer]::OrdinalIgnoreCase)
 
     Context "Load Module" {
 
@@ -126,6 +127,33 @@ Describe "PsIni functionality" {
             $dictOut["Category1"]["Key1"] | Should -BeOfType [String]
             $dictOut["Category1"]["Key2"] | Should -BeOfType [String]
             $dictOut["Category2"]["Key4"] | Should -BeOfType [String]
+        }
+
+    }
+
+    Context "Reading INI Ignoring empty sections" {
+
+        #arrange
+        Out-IniFile -InputObject $dictIn -FilePath $iniFile
+
+        # act
+        $global:dictOut = Get-IniContent -FilePath $iniFile -IgnoreEmptySections
+
+        # assert
+        It "creates a OrderedDictionary from an INI file" {
+            ($dictOut.GetType()) | Should Be System.Collections.Specialized.OrderedDictionary
+        }
+
+        #assert
+        It "reads sames keys into an [array]" {
+            $dictOut["Category2"]["Key3"].gettype().FullName | Should -Be "System.Collections.ArrayList"
+        }
+
+        It "keeps non repeating keys as [string]" {
+            $dictOut["Category1"]["Key1"] | Should -BeOfType [String]
+            $dictOut["Category1"]["Key2"] | Should -BeOfType [String]
+            $dictOut["Category2"]["Key4"] | Should -BeOfType [String]
+            $dictOut["Category3"] | Should -BeNullOrEmpty
         }
 
     }
